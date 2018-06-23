@@ -36,8 +36,8 @@ public class CocheMovimiento : MonoBehaviour
     }
     void Moverse()
     {
-        Jugador.transform.position = this.transform.localPosition;
-        transform.Translate(-1 * Time.deltaTime, 0, 0);
+        Jugador.transform.position = Asiento.transform.position;
+        transform.Translate(-10 * Time.deltaTime, 0, 0);
     }
 
 }

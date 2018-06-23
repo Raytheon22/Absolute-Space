@@ -10,7 +10,10 @@ public class Movimiento : MonoBehaviour
     [SerializeField] private float FuerzaDeSalto;
     [SerializeField] private float Gravedad;
     [SerializeField] private GameObject Camara;
-    [SerializeField] private GameObject Ojos;
+
+
+    public float VelocidadDeCaida;
+
     void Start()
     {
         Controlador = gameObject.GetComponent<CharacterController>();
@@ -20,17 +23,21 @@ public class Movimiento : MonoBehaviour
 
     void Update()
     {
-        //Seguimiento
-        Ojos.transform.position = transform.position;
-        Camara.transform.position = Ojos.transform.position;
-        transform.rotation = Camara.transform.rotation;
-       
-       //Movimiento
+        //Movimiento
         Vector3 mov = Vector3.zero;
-        mov += transform.up * Input.GetAxis("Jump") * Gravedad * FuerzaDeSalto;
         mov += transform.forward * Input.GetAxis("Vertical") * Aceleraccion;
         mov += transform.right * Input.GetAxis("Horizontal") * Aceleraccion;
-        mov += Vector3.down * FuerzaDeSalto;
+        mov += transform.up * Input.GetAxis("Jump") * Gravedad * FuerzaDeSalto;
+        if (!Controlador.isGrounded)
+        {
+            VelocidadDeCaida += 3;
+            mov += Vector3.down * VelocidadDeCaida * Gravedad * Time.deltaTime;
+        }
+        else
+        {
+            VelocidadDeCaida = 0;
+        }
+
         Controlador.Move(mov * Time.deltaTime);
     }
 }

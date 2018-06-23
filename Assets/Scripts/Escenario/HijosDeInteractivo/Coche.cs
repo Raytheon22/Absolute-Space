@@ -19,8 +19,11 @@ public class Coche : Interactivo
     }
     public override void Activar()
     {
-        Jugado.GetComponentInChildren<Movimiento>().enabled = false;
-        Jugado.transform.position = transform.localPosition;
+        Jugado.GetComponent<Movimiento>().enabled = false;
+        Jugado.GetComponent<UnityEngine.AI.NavMeshAgent>().enabled = true;
+        Jugado.GetComponent<UnityEngine.AI.NavMeshAgent>().SetDestination(this.transform.position);
+        //Jugado.transform.position = transform.position;
         Auto.GetComponent<CocheMovimiento>().Arrancar();
+
     }
 }
